@@ -128,7 +128,7 @@ export default function ExecutiveBrief() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               <tr className="hover:bg-gray-50">
-                <td className="px-4 py-3 border">Red Sea</td>
+                <td className="px-4 py-3 border">Indian Ocean</td>
                 <td className="px-4 py-3 border">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
                     ⚠⚠ Critical
@@ -147,7 +147,7 @@ export default function ExecutiveBrief() {
               </tr>
               
               <tr className="hover:bg-gray-50">
-                <td className="px-4 py-3 border">Mediterranean/Black Sea</td>
+                <td className="px-4 py-3 border">Europe</td>
                 <td className="px-4 py-3 border">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-rose-100 text-rose-800">
                     ⚠ Severe
