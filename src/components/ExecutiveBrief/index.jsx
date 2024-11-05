@@ -1,12 +1,37 @@
 import React from 'react';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
+import MaritimeMap from '../MaritimeMap';
 
-// Mini map markers for recent incidents
-const markers = [
-  { id: 1, lat: 1.12, lng: 103.8, type: 'robbery' },
-  { id: 2, lat: 14.5, lng: 42.5, type: 'attack' },
-  { id: 3, lat: 46.48, lng: 30.75, type: 'military' },
-  { id: 4, lat: 18.37, lng: -93.82, type: 'robbery' }
+// Sample incident data for the map
+const currentIncidents = [
+  {
+    latitude: 1.12,
+    longitude: 103.8,
+    title: "Singapore Strait Robbery",
+    description: "Armed robbery aboard bulk carrier",
+    type: "robbery"
+  },
+  {
+    latitude: 14.5,
+    longitude: 42.5,
+    title: "Red Sea Attack",
+    description: "Missile attack on commercial vessel",
+    type: "attack"
+  },
+  {
+    latitude: 46.48,
+    longitude: 30.75,
+    title: "Black Sea Incident",
+    description: "Military activity affecting port operations",
+    type: "military"
+  },
+  {
+    latitude: 18.37,
+    longitude: -93.82,
+    title: "Gulf of Mexico Incident",
+    description: "Armed robbery near FPSO",
+    type: "robbery"
+  }
 ];
 
 // Sparkline component
@@ -24,34 +49,6 @@ const Sparkline = ({ data }) => (
   </ResponsiveContainer>
 );
 
-// MiniMap component
-const MiniMap = () => (
-  <div className="relative">
-    <svg viewBox="0 0 360 180" className="w-full h-32 bg-blue-50 rounded">
-      {/* Simplified world map paths */}
-      <path 
-        d="M 50 50 L 310 50 L 310 130 L 50 130 Z" 
-        fill="none" 
-        stroke="#cbd5e1" 
-        strokeWidth="0.5"
-      />
-      
-      {/* Incident markers */}
-      {markers.map(marker => (
-        <circle
-          key={marker.id}
-          cx={180 + marker.lng}
-          cy={90 - marker.lat}
-          r="3"
-          fill={marker.type === 'robbery' ? '#ef4444' : 
-               marker.type === 'attack' ? '#f97316' : '#3b82f6'}
-          className="animate-pulse"
-        />
-      ))}
-    </svg>
-  </div>
-);
-
 export default function ExecutiveBrief() {
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg my-8">
@@ -67,12 +64,24 @@ export default function ExecutiveBrief() {
         </div>
       </div>
 
-      {/* Active Incidents Map */}
+      {/* Active Incidents Map Section */}
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-3">
           Active Incidents
         </h2>
-        <MiniMap />
+        <div className="rounded-lg overflow-hidden shadow-sm">
+          {import.meta.env.VITE_MAPBOX_TOKEN ? (
+            <MaritimeMap 
+              incidents={currentIncidents}
+              center={[40, 20]}
+              zoom={1}
+            />
+          ) : (
+            <div className="w-full h-[300px] bg-gray-100 flex items-center justify-center">
+              <p className="text-gray-500">MapBox token not found</p>
+            </div>
+          )}
+        </div>
         <div className="mt-2 text-xs text-gray-500 flex justify-end gap-3">
           <span className="flex items-center">
             <span className="w-2 h-2 rounded-full bg-red-500 mr-1"></span> Robbery

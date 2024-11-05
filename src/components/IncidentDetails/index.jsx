@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Anchor, Clock, Shield, AlertTriangle, Navigation, Users, Ship, ChevronLeft } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import MaritimeMap from '../MaritimeMap';
 
 // Sample historical data for the area
 const areaIncidentData = [
@@ -13,6 +14,36 @@ const areaIncidentData = [
 ];
 
 const IncidentDetails = () => {
+  // Sample data for a specific incident and nearby context
+  const mainIncident = {
+    latitude: 1.13,
+    longitude: 103.5,
+    title: "ASPASIA LUCK",
+    description: "10 intruders armed with knives sighted in engine room. Engine spares stolen.",
+    type: "robbery"
+  };
+
+  // Include nearby incidents for context
+  const nearbyIncidents = [
+    {
+      latitude: 1.12,
+      longitude: 103.8,
+      title: "MARAN SPIRIT",
+      description: "Previous incident (Oct 17)",
+      type: "robbery"
+    },
+    {
+      latitude: 1.13,
+      longitude: 103.49,
+      title: "NYON",
+      description: "Related incident (Oct 17)",
+      type: "robbery"
+    }
+  ];
+
+  // Combine main incident with context
+  const mapIncidents = [mainIncident, ...nearbyIncidents];
+
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg my-8">
       {/* Header with Alert Status */}
@@ -76,37 +107,17 @@ const IncidentDetails = () => {
       {/* Incident Map */}
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Location</h2>
-        <svg viewBox="0 0 400 200" className="w-full h-48 bg-blue-50 rounded">
-          {/* Simplified Singapore Strait map */}
-          <path 
-            d="M50,100 C100,90 300,110 350,100" 
-            fill="none" 
-            stroke="#cbd5e1" 
-            strokeWidth="1"
-          />
-          {/* Incident location */}
-          <circle cx="200" cy="100" r="4" fill="#ef4444" className="animate-pulse" />
-          {/* Direction arrow */}
-          <path 
-            d="M180,100 L220,100" 
-            stroke="#666" 
-            strokeWidth="1" 
-            markerEnd="url(#arrow)" 
-          />
-          <defs>
-            <marker
-              id="arrow"
-              viewBox="0 0 10 10"
-              refX="9"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto"
-            >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
-            </marker>
-          </defs>
-        </svg>
+        <MaritimeMap 
+          incidents={mapIncidents}
+          center={[mainIncident.longitude, mainIncident.latitude]} // Center on main incident
+          zoom={10} // Closer zoom for incident details
+        />
+        <div className="mt-2 text-xs text-gray-500">
+          <span className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-red-500 mr-1"></span> 
+            Incident Location (and related incidents in past 24h)
+          </span>
+        </div>
       </div>
 
       {/* Incident Details */}

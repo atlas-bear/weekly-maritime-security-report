@@ -5,4 +5,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/weekly-maritime-security-report/",
+  server: {
+    cors: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  },
+  define: {
+    "process.env": {},
+  },
 });

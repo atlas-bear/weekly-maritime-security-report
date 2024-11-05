@@ -1,5 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip, AreaChart, Area } from 'recharts';
+import MaritimeMap from '../MaritimeMap';
 
 const monthlyData = [
   { month: 'May', incidents: 8, robberies: 6, attacks: 2, boardings: 4 },
@@ -11,6 +12,31 @@ const monthlyData = [
 ];
 
 const RegionalBrief = () => {
+  // Sample data for Southeast Asia incidents
+  const regionalIncidents = [
+    {
+      latitude: 1.12,
+      longitude: 103.8,
+      title: "MARAN SPIRIT",
+      description: "Perpetrator sighted in engine room. Alarm raised, crew mustered.",
+      type: "robbery"
+    },
+    {
+      latitude: 1.13,
+      longitude: 103.5,
+      title: "ASPASIA LUCK",
+      description: "10 intruders armed with knives sighted in engine room. Engine spares stolen.",
+      type: "robbery"
+    },
+    {
+      latitude: 1.13,
+      longitude: 103.49,
+      title: "NYON",
+      description: "Five intruders armed with knives sighted in engine room.",
+      type: "robbery"
+    }
+  ];
+  
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg my-8">
       {/* Header Section */}
@@ -60,21 +86,21 @@ const RegionalBrief = () => {
       {/* Incident Map */}
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Incidents</h2>
-        <svg viewBox="0 0 400 200" className="w-full h-48 bg-blue-50 rounded">
-          {/* Simplified SE Asia map */}
-          <path 
-            d="M150,100 C150,100 200,80 250,100 S300,120 350,100" 
-            fill="none" 
-            stroke="#cbd5e1" 
-            strokeWidth="1"
-          />
-          {/* Singapore Strait incidents */}
-          <circle cx="220" cy="110" r="4" fill="#ef4444" className="animate-pulse" />
-          <circle cx="225" cy="112" r="4" fill="#ef4444" className="animate-pulse" />
-          <circle cx="218" cy="108" r="4" fill="#ef4444" className="animate-pulse" />
-        </svg>
-        <div className="mt-2 text-xs text-gray-500">
-          ● Recent incidents in Singapore Strait
+        <MaritimeMap 
+          incidents={regionalIncidents}
+          center={[103.8, 1.12]} // Centered on Singapore Strait
+          zoom={9} // Closer zoom for regional view
+        />
+        <div className="mt-2 text-xs text-gray-500 flex justify-end gap-3">
+          <span className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-red-500 mr-1"></span> Robbery
+          </span>
+          <span className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-orange-500 mr-1"></span> Attack
+          </span>
+          <span className="flex items-center">
+            <span className="w-2 h-2 rounded-full bg-blue-500 mr-1"></span> Military
+          </span>
         </div>
       </div>
 
