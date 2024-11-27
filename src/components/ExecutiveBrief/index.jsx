@@ -147,9 +147,9 @@ export default function ExecutiveBrief() {
                 <td className="px-4 py-3 border">
                   <div className="h-5">
                     <Sparkline data={[
-                      { week: 1, value: 2 }, { week: 2, value: 3 }, 
-                      { week: 3, value: 4 }, { week: 4, value: 3 }, 
-                      { week: 5, value: 5 }
+                      { week: 1, value: 4 }, { week: 2, value: 1 }, 
+                      { week: 3, value: 6 }, { week: 4, value: 2 }, 
+                      { week: 5, value: 3 }
                     ]} />
                   </div>
                 </td>
